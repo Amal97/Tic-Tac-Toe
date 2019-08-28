@@ -15,15 +15,12 @@ import java.io.InputStreamReader;
 
 public class Game {
 	// game board
-    private static final int ROWS = 3;
-    private static final int COLUMNS = 3;
+	private static String board[][] = new String [3][3];
 
-	private static String board[][] = new String [ROWS][COLUMNS];
-
-	// initialises an empty board
+	// initilises an empty board
 	private static void initiliseBoard() {
-		for(int i = 0; i < ROWS; i++) {
-			for(int j = 0; j < COLUMNS; j++) {
+		for(int i = 0; i < 3; i++) {
+			for(int j = 0; j < 3; j++) {
 				board[i][j] = ".";
 			}
 		}
@@ -31,8 +28,8 @@ public class Game {
 
 	// prints the board
 	private static void boardPrinter() {
-		for(int i = 0; i < ROWS; i++) {
-			for(int j = 0; j < COLUMNS; j++) {
+		for(int i = 0; i < 3; i++) {
+			for(int j = 0; j < 3; j++) {
 				System.out.print(board[i][j]);
 			}
 			System.out.println("");
@@ -73,7 +70,7 @@ public class Game {
 
 	// checks if all fields in a row are taken by the player.
 	private static boolean checkHorizontal() {
-		for(int i = 0; i < ROWS; i++) {
+		for(int i = 0; i < 3; i++) {
 			if((board[i][0] == "X") && (board[i][1] == "X") && (board[i][2] == "X")) {
 				return true;
 			}
@@ -86,7 +83,7 @@ public class Game {
 
 	// checks if all fields in a column are taken by the player.
 	private static boolean checkVertical() {
-		for(int i = 0; i < COLUMNS; i++) {
+		for(int i = 0; i < 3; i++) {
 			if((board[0][i] == "X") && (board[1][i] == "X") && (board[2][i] == "X")) {
 				return true;
 			}
@@ -118,8 +115,8 @@ public class Game {
 
 	// checks if there is an empty space available in the board
 	private static boolean checkDraw() {
-		for(int i = 0; i < ROWS; i++) {
-			for(int j = 0; j < COLUMNS; j++) {
+		for(int i = 0; i < 3; i++) {
+			for(int j = 0; j < 3; j++) {
 				if(board[i][j] == ".") {
 					return false;
 				}
@@ -168,7 +165,7 @@ public class Game {
 				}
 
 				// get user input and print to console
-				System.out.print("Player "+player+" enter a coord x,y to place your "+piece+" or enter 'q' to give up: ");
+				System.out.print("Player "+player+" enter a coord x,y to place your "+piece+" or enter 'q' to give up:");
 				userInput = inFromUser.readLine();
 				System.out.print("\n");
 
@@ -178,8 +175,8 @@ public class Game {
 				}
 				else {
 					// match the matrix with user's input by -1
-					x = (Integer.parseInt(userInput.substring(0,1))) - 1;	// row number
-					y = (Integer.parseInt(userInput.substring(2,3))) - 1;	// column number
+					x = (Integer.parseInt(userInput.substring(0,1))) - 1;
+					y = (Integer.parseInt(userInput.substring(2,3))) - 1;
 					if(x<=-1 || y<=-1) {
 						System.out.println("Invalid Move");
 						valid = false;;
@@ -210,12 +207,10 @@ public class Game {
 					boardPrinter();
 					playing = false;
 				}
-				// continue if valid move
 				else if(nextMove) {
 					System.out.println(" here's the current board: \n");
 				}
 			}
-			// when user quits the game
 			else if(!playing) {
 				System.out.println("Player "+player+" quit the game!");
 

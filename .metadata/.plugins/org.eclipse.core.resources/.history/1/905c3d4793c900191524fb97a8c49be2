@@ -178,8 +178,8 @@ public class Game {
 				}
 				else {
 					// match the matrix with user's input by -1
-					x = (Integer.parseInt(userInput.substring(0,1))) - 1;	// row number
-					y = (Integer.parseInt(userInput.substring(2,3))) - 1;	// column number
+					x = (Integer.parseInt(userInput.substring(0,1))) - 1;
+					y = (Integer.parseInt(userInput.substring(2,3))) - 1;
 					if(x<=-1 || y<=-1) {
 						System.out.println("Invalid Move");
 						valid = false;;
