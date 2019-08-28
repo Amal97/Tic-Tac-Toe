@@ -2,12 +2,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-// Quick, Simple and Naive implementation of Tic Tac Toe
-
-// Assumptions made:
-// 		- Player will not input negative numbers
-//		- The input format will be x,y (that is there is no spaces)
-
 public class Game {
 	private static String board[][] = new String [3][3];
 	
@@ -99,17 +93,6 @@ public class Game {
 		return false;
 	}
 	
-	private static boolean checkDraw() {
-		for(int i = 0; i < 3; i++) {
-			for(int j = 0; j < 3; j++) {
-				if(board[i][j] == ".") {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-	
 	private static boolean checkWinner() {
 		if(checkHorizontal() || checkVertical() || checkDiagonal()) {
 			return true;
@@ -157,14 +140,8 @@ public class Game {
 				else {
 					x = (Integer.parseInt(userInput.substring(0,1))) - 1;
 					y = (Integer.parseInt(userInput.substring(2,3))) - 1;
-					if(x<=-1 || y<=-1) {
-						System.out.println("Invalid Move");
-						valid = false;;
-					}
-					else {
-						valid = true;
-					}
 				}
+				valid = true;
 			}
 			catch (Exception e) {
 				System.out.println("Invalid Move");
@@ -178,11 +155,6 @@ public class Game {
 					boardPrinter();
 					playing = false;
 					
-				}
-				else if(checkDraw()) {
-					System.out.println(" the game is a draw \n");
-					boardPrinter();
-					playing = false;
 				}
 				else if(nextMove) {
 					System.out.println(" here's the current board: \n");
