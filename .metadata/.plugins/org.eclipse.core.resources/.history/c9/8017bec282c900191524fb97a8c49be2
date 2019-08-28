@@ -1,0 +1,82 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Game {
+	private static String board[][] = new String [3][3];
+	
+	private static void initiliseBoard() {
+		for(int i = 0; i < 3; i++) {
+			for(int j = 0; j < 3; j++) {
+				board[i][j] = ".";
+			}
+		}
+	}
+	
+	private static void boardPrinter(int x, int y) {
+		for(int i = 0; i < 3; i++) {
+			for(int j = 0; j < 3; j++) {
+				System.out.print(board[i][j]);
+			}
+			System.out.println("");
+		}
+	}
+	
+	private static boolean processPlayersMove(int x, int y, int player) {
+		boolean nextMove = false;
+		if(board[x][y].equals(".")) {
+			if(player == 1) {
+				board[x][y] = "X";
+			}
+			else {
+				board[x][y] = "O";
+			}
+			nextMove = true;
+		}
+		else {
+			System.out.println("Oh no, a piece is already at this place! Try again...");
+		}
+		return nextMove;
+	}
+	
+	private static int changePlayer(int player) {
+		if(player == 1) {
+			player = 2;
+		}
+		else {
+			player = 1;
+		}
+		return player;
+	}
+	
+	public static void main(String[] args) {
+		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
+		String userInput = "";
+		int x = -1;
+		int y = -1;
+		int player = 1;
+		boolean nextMove = false;
+		
+		initiliseBoard();
+		
+		while(true) {
+			try {
+				userInput = inFromUser.readLine();
+				x = Integer.parseInt(userInput.substring(0,1));
+				y = Integer.parseInt(userInput.substring(2,3));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			nextMove = processPlayersMove(x,y,player);
+			
+			if(nextMove) {
+				player = changePlayer(player);
+			}
+			
+			boardPrinter(x,y);
+		}
+	}
+	
+	
+}

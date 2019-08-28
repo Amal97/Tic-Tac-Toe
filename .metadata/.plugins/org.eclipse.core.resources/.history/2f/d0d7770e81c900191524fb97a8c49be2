@@ -1,0 +1,55 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Game {
+	private String board[][] = new String [3][3];
+	
+	private static void boardPrinter(int x, int y) {
+		for(int i = 0; i < 3; i++) {
+			for(int j = 0; j < 3; j++) {
+				System.out.print(".");
+			}
+			System.out.println("");
+		}
+	}
+	
+	private void processPlayersMove(int x, int y, int player) {
+		if(board[x][y].equals(".")) {
+			if(player == 1) {
+				board[x][y] = "X";
+			}
+			else {
+				board[x][y] = "O";
+			}
+		}
+		else {
+			System.out.println("Oh no, a piece is already at this place! Try again...");
+		}
+	}
+	
+	public static void main(String[] args) {
+		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
+		String userInput = "";
+		int x;
+		int y;
+		int playerOne;
+		int playerTwo;
+
+		while(true) {
+			try {
+				userInput = inFromUser.readLine();
+				x = Integer.parseInt(userInput.substring(0,1)) ;
+				
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			boardPrinter(0,0);
+
+		}
+	}
+	
+	
+}

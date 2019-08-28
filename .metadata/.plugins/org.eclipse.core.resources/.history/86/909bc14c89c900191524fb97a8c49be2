@@ -1,0 +1,147 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Game {
+	private static String board[][] = new String [3][3];
+	
+	private static void initiliseBoard() {
+		for(int i = 0; i < 3; i++) {
+			for(int j = 0; j < 3; j++) {
+				board[i][j] = ".";
+			}
+		}
+	}
+	
+	private static void boardPrinter() {
+		for(int i = 0; i < 3; i++) {
+			for(int j = 0; j < 3; j++) {
+				System.out.print(board[i][j]);
+			}
+			System.out.println("");
+		}
+		System.out.println("");
+	}
+	
+	private static boolean processPlayersMove(int x, int y, int player) {
+		boolean nextMove = false;
+		if(board[x][y].equals(".")) {
+			if(player == 1) {
+				board[x][y] = "X";
+			}
+			else {
+				board[x][y] = "O";
+			}
+			System.out.print("Move accepted,");
+			nextMove = true;
+		}
+		else {
+			System.out.println("Oh no, a piece is already at this place! Try again... \n");
+		}
+		return nextMove;
+	}
+	
+	private static int changePlayer(int player) {
+		if(player == 1) {
+			player = 2;
+		}
+		else {
+			player = 1;
+		}
+		return player;
+	}
+	
+	private static boolean checkHorizontal() {
+		for(int i = 0; i < 3; i++) {
+			if((board[i][0] == "X") && (board[i][1] == "X") && (board[i][2] == "X")) {
+				return true;
+			}
+			else if((board[i][0] == "Y") && (board[i][1] == "Y") && (board[i][2] == "Y")) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private static boolean checkVertical() {
+		for(int i = 0; i < 3; i++) {
+			if((board[0][i] == "X") && (board[1][i] == "X") && (board[2][i] == "X")) {
+				return true;
+			}
+			else if((board[0][i] == "Y") && (board[1][i] == "Y") && (board[2][i] == "Y")) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private static boolean checkWinner() {
+		if( (checkHorizontal()) || (checkVertical())) {
+			return true;
+		}
+		return false;
+	}
+	
+	public static void main(String[] args) {
+		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
+		String userInput = "";
+		int x = -1;
+		int y = -1;
+		int player = 1;
+		String piece = "X";
+		boolean playing = true;
+		boolean nextMove = false;
+		
+		initiliseBoard();
+		System.out.println("Welcome to Tic Tac Toe! \n");
+		System.out.println("Here's the current board: \n");
+
+		while(playing) {
+			if(nextMove) {
+				boardPrinter();
+			}
+			try {
+				if(nextMove) {
+					player = changePlayer(player);
+					if(player == 1) {
+						piece = "X";
+					}
+					else {
+						piece = "O";
+					}
+				}
+				
+				System.out.print("Player "+player+" enter a coord x,y to place your "+piece+" or enter 'q' to give up:");
+				userInput = inFromUser.readLine();
+				System.out.print("\n");
+
+				if(userInput.equalsIgnoreCase("q")) {
+					playing = false;
+				}
+				else {
+					x = (Integer.parseInt(userInput.substring(0,1))) - 1;
+					y = (Integer.parseInt(userInput.substring(2,3))) - 1;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			if(playing) {
+				nextMove = processPlayersMove(x,y,player);
+				if(checkWinner()) {
+					System.out.println(" well done you've won the game! \n");
+					boardPrinter();
+					playing = false;
+					
+				}
+				else if(nextMove) {
+					System.out.println(" here's the current board: \n");
+				}
+			}
+			else {
+				System.out.println("Player "+player+" quit the game!");
+
+			}
+		}
+	}	
+}
